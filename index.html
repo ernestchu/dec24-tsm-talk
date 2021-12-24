@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <title>TSM-Net: Progress Report</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3.2.20/dist/vue.global.prod.js"></script>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="app">
+      <h1>TSM-Net: Progress Report Dec. 24<hr></h1>
+
+      <ul>
+        <li>
+          Motivation:
+          <ul>
+            <li>We want to explain our neural encoder/decoder.</li>
+            <li style="list-style-type: none;">
+              <svg width="500px" height="150px">
+                <defs>
+                  <marker id="triangle" viewBox="0 0 10 10"
+                    refX="1" refY="5"
+                    markerUnits="strokeWidth"
+                    markerWidth="10" markerHeight="10"
+                    orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+                  </marker>
+                </defs>
+
+                <rect x="50" y="60" width="120" height="30" stroke="#333" fill="transparent" stroke-width="3"/>
+                <text x="200" y="45" style="fill: #666;">Compress</text>
+                <line x1="200" y1="75" x2="350" y2="75" stroke="black" stroke-width="3" marker-end="url(#triangle)"/>
+                <rect x="400" y="15" width="30" height="120" stroke="#333" fill="transparent" stroke-width="3"/>
+              </svg>
+            </li>
+            <li>We want to know how the model maps the seemly random compressed data to various sounds.</li>
+            <li>
+              We want to see if our approach conquers the Nyquist frequency (double of the largest frequency).
+              <img src="./images/alias.png" alt="">
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul>
+            <li>We examine outputs from intermediate layers.</li>
+            <li>We analyze the compressed latent vectors.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div v-for="audio in audios">
+        <h2>Audio: {{ audio }}<hr></h2>
+        <div class="container">
+          <div class="col">
+            <div class="caption">Encoder</div>
+            <img v-for="i in [0,1,2,3,4,5]" :src="`./images/${audio}/out/${i}.svg`">
+          </div>
+          <div class="col">
+            <div class="caption">Decoder</div>
+            <img v-for="i in [12,11,10,9,8,7]" :src="`./images/${audio}/out/${i}.svg`">
+          </div>
+        </div>
+        <img class="latent" :src="`./images/${audio}/out/6.svg`">
+      </div>
+
+      <h2>Latent vector analysis<hr></h2>
+      <div class="container">
+        <div class="col">
+          <div class="caption">Original</div>
+          <img v-for="audio in audios" :src="`./images/${audio}/out/0.svg`">
+        </div>
+        <div class="col">
+          <div class="caption">Compressed latent vectors</div>
+          <img v-for="audio in audios" :src="`./images/${audio}/transpose.svg`">
+        </div>
+        <div class="col">
+          <div class="caption">Histogram for latent vectors</div>
+          <img v-for="audio in audios" :src="`./images/${audio}/hist.svg`">
+        </div>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
