@@ -73,17 +73,13 @@
 
       <h2>Latent vector analysis<hr></h2>
       <div class="container">
-        <div class="col">
-          <div class="caption">Original</div>
-          <img v-for="audio in audios" :src="`./images/${audio}/out/0.svg`">
-        </div>
-        <div class="col">
-          <div class="caption">Compressed latent vectors</div>
-          <img v-for="audio in audios" :src="`./images/${audio}/transpose.svg`">
-        </div>
-        <div class="col">
-          <div class="caption">Histogram for latent vectors</div>
-          <img v-for="audio in audios" :src="`./images/${audio}/hist.svg`">
+        <div v-for="[caption, content] in [
+          ['Original', 'out/0'],
+          ['Compressed latent vectors', 'transpose'],
+          ['Histogram for latent vectors', 'hist']
+        ]" class="col">
+          <div class="caption">{{ caption }}</div>
+          <img v-for="audio in audios" :src="`./images/${audio}/${content}.svg`">
         </div>
       </div>
     </div>
